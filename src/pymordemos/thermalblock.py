@@ -57,7 +57,11 @@ from docopt import docopt
 import pymor.core as core
 core.logger.MAX_HIERACHY_LEVEL = 2
 from pymor.algorithms import greedy, trivial_basis_extension, gram_schmidt_basis_extension
-from pymor.analyticalproblems import ThermalBlockProblem
+#from pymor.analyticalproblems import ThermalRadialBlockProblem
+from pymor.analyticalproblems import ThermalRadialBlockProblem
+#from pymor.analyticalproblems.thermalradial import ThermalRadialBlockProblem
+#from pymor.analyticalproblems.thermalradial import ThermalRadialBlockProblem
+
 from pymor.discretizers import discretize_elliptic_cg
 from pymor.reductors import reduce_to_subbasis
 from pymor.reductors.linear import reduce_stationary_affine_linear
@@ -66,9 +70,11 @@ core.getLogger('pymor.discretizations').setLevel('INFO')
 core.getLogger('pymor.la').setLevel('INFO')
 
 
+
+
 def thermalblock_demo(args):
     args['XBLOCKS'] = int(args['XBLOCKS'])
-    args['YBLOCKS'] = int(args['YBLOCKS'])
+    #args['YBLOCKS'] = int(args['YBLOCKS'])
     args['--grid'] = int(args['--grid'])
     args['SNAPSHOTS'] = int(args['SNAPSHOTS'])
     args['RBSIZE'] = int(args['RBSIZE'])
@@ -81,7 +87,7 @@ def thermalblock_demo(args):
     print('Solving on TriaGrid(({0},{0}))'.format(args['--grid']))
 
     print('Setup Problem ...')
-    problem = ThermalBlockProblem(num_blocks=(args['XBLOCKS'], args['YBLOCKS']))
+    problem = ThermalRadialBlockProblem(num_blocks=(args['XBLOCKS']))
 
     print('Discretize ...')
     discretization, _ = discretize_elliptic_cg(problem, diameter=m.sqrt(2) / args['--grid'])

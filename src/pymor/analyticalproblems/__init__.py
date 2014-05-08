@@ -4,3 +4,4 @@
 
 from pymor.analyticalproblems.elliptic import EllipticProblem
 from pymor.analyticalproblems.thermalblock import ThermalBlockProblem
+from pymor.analyticalproblems.thermalradial import ThermalRadialBlockProblem

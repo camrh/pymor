@@ -28,17 +28,21 @@ import sys
 import math as m
 from docopt import docopt
 import numpy as np
+import pymor.la as la
 
 from pymor.analyticalproblems import EllipticProblem
 from pymor.discretizers import discretize_elliptic_cg
 from pymor.domaindescriptions import BoundaryType
 from pymor.domaindescriptions import RectDomain
 from pymor.functions import GenericFunction
+from pymor.la import NumpyVectorArray
+
 
 
 def cg_demo(nrhs, ndirichlet, nneumann):
     rhs0 = GenericFunction(lambda X: np.ones(X.shape[:-1]) * 10, 2)                      # NOQA
     rhs1 = GenericFunction(lambda X: (X[..., 0] - 0.5) ** 2 * 1000, 2)                   # NOQA
+    rhs2 = GenericFunction(lambda X: 2*np.pi**2*np.sin(np.pi*X[..., 0])*np.sin(np.pi*X[...,1]), 2)
     dirichlet0 = GenericFunction(lambda X: np.zeros(X.shape[:-1]), 2)                    # NOQA
     dirichlet1 = GenericFunction(lambda X: np.ones(X.shape[:-1]), 2)                     # NOQA
     dirichlet2 = GenericFunction(lambda X: X[..., 0], 2)                                 # NOQA
@@ -47,7 +51,7 @@ def cg_demo(nrhs, ndirichlet, nneumann):
     domain2 = RectDomain(right=BoundaryType('neumann'), top=BoundaryType('neumann'))     # NOQA
     domain3 = RectDomain(right=BoundaryType('neumann'), top=BoundaryType('neumann'), bottom=BoundaryType('neumann'))  # NOQA
 
-    assert 0 <= nrhs <= 1, ValueError('Invalid rhs number.')
+    assert 0 <= nrhs <= 2, ValueError('Invalid rhs number.')
     rhs = eval('rhs{}'.format(nrhs))
 
     assert 0 <= ndirichlet <= 2, ValueError('Invalid boundary number.')
@@ -63,7 +67,10 @@ def cg_demo(nrhs, ndirichlet, nneumann):
         problem = EllipticProblem(domain=domain, rhs=rhs, dirichlet_data=dirichlet)
 
         print('Discretize ...')
-        discretization, _ = discretize_elliptic_cg(problem, diameter=m.sqrt(2) / n)
+        discretization, dict = discretize_elliptic_cg(problem, diameter=m.sqrt(2) / n)
+
+
+
 
         print('Solve ...')
         U = discretization.solve()
@@ -72,6 +79,20 @@ def cg_demo(nrhs, ndirichlet, nneumann):
         discretization.visualize(U, title='Triagrid(({0},{0}))'.format(n))
 
         print('')
+
+        grid = dict.get('grid', 'not found')
+        print(grid)
+
+        exact = GenericFunction(lambda X: np.sin(np.pi * X[...,0])*np.sin(np.pi*X[...,1]),2)
+        U_ex = NumpyVectorArray(exact.evaluate(grid.centers(2)))
+
+
+        print('Plot ...')
+        discretization.visualize(U_ex, title='exactTriagrid(({0},{0}))'.format(n))
+
+
+        error = U - U_ex
+        print(error.l2_norm())
 
 
 if __name__ == '__main__':
