@@ -8,7 +8,7 @@
 Usage:
   thermalblock.py [-ehp] [--estimator-norm=NORM] [--extension-alg=ALG] [--grid=NI] [--help]
                   [--plot-solutions] [--plot-error-sequence] [--reductor=RED] [--test=COUNT]
-                  XBLOCKS YBLOCKS SNAPSHOTS RBSIZE
+                  XBLOCKS [YBLOCKS] SNAPSHOTS RBSIZE
 
 
 Arguments:
@@ -169,7 +169,7 @@ def thermalblock_demo(args):
     *** RESULTS ***
 
     Problem:
-       number of blocks:                   {args[XBLOCKS]}x{args[YBLOCKS]}
+       number of blocks:                   {args[XBLOCKS]}
        h:                                  sqrt(2)/{args[--grid]}
 
     Greedy basis generation:
