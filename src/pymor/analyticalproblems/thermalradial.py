@@ -15,7 +15,7 @@ from pymor.functions import GenericFunction, ConstantFunction
 from pymor.parameters import CubicParameterSpace, ProjectionParameterFunctional
 
 
-class ThermalRadialBlockProblem(EllipticProblem, Unpicklable):
+class TRBP(EllipticProblem, Unpicklable):
     '''Analytical description of a 2D thermal block diffusion problem.
 
     This problem is to solve the elliptic equation ::
