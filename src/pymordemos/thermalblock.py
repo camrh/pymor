@@ -57,7 +57,7 @@ from docopt import docopt
 import pymor.core as core
 core.logger.MAX_HIERACHY_LEVEL = 2
 from pymor.algorithms import greedy, trivial_basis_extension, gram_schmidt_basis_extension
-from pymor.analyticalproblems import ThermalBlockProblem
+from pymor.analyticalproblems import ThermalRadialBlockProblem
 from pymor.discretizers import discretize_elliptic_cg
 from pymor.reductors import reduce_to_subbasis
 from pymor.reductors.linear import reduce_stationary_affine_linear
@@ -81,7 +81,7 @@ def thermalblock_demo(args):
     print('Solving on TriaGrid(({0},{0}))'.format(args['--grid']))
 
     print('Setup Problem ...')
-    problem = ThermalBlockProblem(num_blocks=(args['XBLOCKS'], args['YBLOCKS']))
+    problem = ThermalRadialBlockProblem(num_blocks=args['XBLOCKS'])
 
     print('Discretize ...')
     discretization, _ = discretize_elliptic_cg(problem, diameter=m.sqrt(2) / args['--grid'])
