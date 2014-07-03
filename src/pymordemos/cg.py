@@ -42,10 +42,13 @@ def cg_demo(nrhs, ndirichlet, nneumann):
     dirichlet0 = GenericFunction(lambda X: np.zeros(X.shape[:-1]), 2)                    # NOQA
     dirichlet1 = GenericFunction(lambda X: np.ones(X.shape[:-1]), 2)                     # NOQA
     dirichlet2 = GenericFunction(lambda X: X[..., 0], 2)                                 # NOQA
+    neumann = GenericFunction(lambda X: X[..., 0], 2)
     domain0 = RectDomain()                                                               # NOQA
-    domain1 = RectDomain(right=BoundaryType('neumann'))                                  # NOQA
+    domain1 = RectDomain(right=BoundaryType('neumann'), left=BoundaryType('neumann'))                                  # NOQA
     domain2 = RectDomain(right=BoundaryType('neumann'), top=BoundaryType('neumann'))     # NOQA
     domain3 = RectDomain(right=BoundaryType('neumann'), top=BoundaryType('neumann'), bottom=BoundaryType('neumann'))  # NOQA
+    domain4 = RectDomain(top=BoundaryType('neumann'), bottom=BoundaryType('neumann'))
+
 
     assert 0 <= nrhs <= 1, ValueError('Invalid rhs number.')
     rhs = eval('rhs{}'.format(nrhs))
@@ -56,11 +59,13 @@ def cg_demo(nrhs, ndirichlet, nneumann):
     assert 0 <= nneumann <= 3, ValueError('Invalid neumann boundary count.')
     domain = eval('domain{}'.format(nneumann))
 
+
+
     for n in [32, 128]:
         print('Solving on TriaGrid(({0},{0}))'.format(n))
 
         print('Setup problem ...')
-        problem = EllipticProblem(domain=domain, rhs=rhs, dirichlet_data=dirichlet)
+        problem = EllipticProblem(domain=domain, rhs=rhs, dirichlet_data=dirichlet, neumann_data=neumann)
 
         print('Discretize ...')
         discretization, _ = discretize_elliptic_cg(problem, diameter=m.sqrt(2) / n)

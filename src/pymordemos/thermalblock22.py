@@ -206,8 +206,8 @@ def thermalblock_demo(args):
 if __name__ == '__main__':
     # parse arguments
     args = docopt(__doc__)
-    args['XBLOCKS'] = 4
-    args['YBLOCKS'] = 4
+    args['XBLOCKS'] = 2
+    args['YBLOCKS'] = 2
     #args['SNAPSHOTS'] 
     # run demo
     #for sn in range(2,3):
@@ -217,7 +217,7 @@ if __name__ == '__main__':
     co = []
     t = []
     h1_est = []
-    filename = ('x4y1-h1-%03d.csv' % int(sn))
+    filename = ('x2y2-h1-%03d.csv' % int(sn))
     with open(filename, 'wb') as f:
         f.write(b"base, h1err, cond, eff, h1estmax\n")
 

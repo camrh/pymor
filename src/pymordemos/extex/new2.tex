@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage{amstext}
+\usepackage{subfig,tikz}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\begin{figure}
+  \centering
+  \subfloat[$H^1_{max}$]{
+  %\subfigure{
+  \begin{tikzpicture}
+      \begin{semilogyaxis}[]
+        \addplot table[x=base,y=h1err,col sep=comma] {./x2y2-h1-002.csv};
+        \addlegendentry{2-2};
+      
+        \addplot table[x=base,y=h1err,col sep=comma] {./x4y1-h1-002.csv};
+	\addlegendentry{4-1};
+
+        \addplot table[x=base,y=h1err,col sep=comma] {./x4y4-h1-002.csv};
+	\addlegendentry{4-4};
+
+        \addplot table[x=base,y=h1err,col sep=comma] {./x3y2-h1-002.csv};
+        \addlegendentry{3-2};
+
+        \addplot table[x=base,y=h1err,col sep=comma] {./x6y1-h1-002.csv};
+	\addlegendentry{6-1};
+
+      \end{semilogyaxis}
+    \end{tikzpicture}
+  }
+  \subfloat[Kondition]
+  {
+    \begin{tikzpicture}
+      \begin{semilogyaxis}%[xlabel={asdf}]
+        \addplot table[x=base,y=cond,col sep=comma] {./x2y2-h1-002.csv};
+        \addlengendentry{2-2}
+
+        \addplot table[x=base,y=cond,col sep=comma] {./x4y1-h1-002.csv};
+        \addlengendentry{4-1}
+
+        \addplot table[x=base,y=cond,col sep=comma] {./x4y4-h1-002.csv};
+        \addlengendentry{4-4}
+
+        \addplot table[x=base,y=cond,col sep=comma] {./x3y2-h1-002.csv};
+        \addlengendentry{3-2}
+
+        \addplot table[x=base,y=cond,col sep=comma] {./x6y1-h1-002.csv};
+        \addlengendentry{6-1}
+
+      \end{semilogyaxis}
+    \end{tikzpicture}
+  }
+  \hfill
+  \subfloat[Effizienz]
+  {
+    \begin{tikzpicture}
+      \begin{axis}%[xlabel={asdf}]
+        \addplot table[x=base,y=eff,col sep=comma] {./x2y2-h1-002.csv};
+        \addlengendentry{2-2};
+
+        \addplot table[x=base,y=eff,col sep=comma] {./x4y1-h1-002.csv};
+        \addlengendentry{4-1};
+
+        \addplot table[x=base,y=eff,col sep=comma] {./x4y4-h1-002.csv};
+        \addlengendentry{4-4};
+
+        \addplot table[x=base,y=eff,col sep=comma] {./x3y2-h1-002.csv};
+        \addlengendentry{3-2};
+
+        \addplot table[x=base,y=eff,col sep=comma] {./x6y1-h1-002.csv};
+        \addlengendentry{6-1};
+      \end{axis}
+    \end{tikzpicture}
+  }
+  \subfloat[$H^_{est}$]
+  {
+    \begin{tikzpicture}
+      \begin{semilogyaxis}%[xlabel={asdf}]
+        \addplot table[x=base,y=h1estmax,col sep=comma] {./x2y2-h1-002.csv};
+        \addlengendentry{2-2};
+
+        \addplot table[x=base,y=h1estmax,col sep=comma] {./x4y1-h1-002.csv};
+        \addlengendentry{4-1};
+
+        \addplot table[x=base,y=h1estmax,col sep=comma] {./x4y4-h1-002.csv};
+        \addlengendentry{4-4};
+
+        \addplot table[x=base,y=h1estmax,col sep=comma] {./x3y2-h1-002.csv};
+        \addlengendentry{3-2};
+
+        \addplot table[x=base,y=h1estmax,col sep=comma] {./x6y1-h1-002.csv};
+        \addlengendentry{6-1};
+
+      \end{semilogyaxis}
+    \end{tikzpicture}
+  }
+  \caption{Thermalblock problem for some configurations}
+  \label{fig:methods}
+\end{figure}
+
+\end{document}

@@ -47,15 +47,19 @@ class EllipticProblem(ImmutableInterface, Named):
     diffusion_functions
     diffusion_functionals
     dirichlet_data
+    neumann_data
     '''
 
     def __init__(self, domain=RectDomain(), rhs=ConstantFunction(dim_domain=2),
                  diffusion_functions=(ConstantFunction(dim_domain=2),),
                  diffusion_functionals=None,
-                 dirichlet_data=ConstantFunction(value=0, dim_domain=2), name=None):
+                 dirichlet_data=ConstantFunction(value=0, dim_domain=2),
+                 neumann_data=ConstantFunction(value=0, dim_domain=2),
+                 name=None):
         self.domain = domain
         self.rhs = rhs
         self.diffusion_functions = diffusion_functions
         self.diffusion_functionals = diffusion_functionals
         self.dirichlet_data = dirichlet_data
+        self.neumann_data = neumann_data
         self.name = name
